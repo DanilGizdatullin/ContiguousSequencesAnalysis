@@ -1,7 +1,7 @@
 import numpy as np
 
-from usa.rules_trie import RulesImportance
-from usa.rules_trie import RulesTrie
+from usa.rules_trie import RulesImportance, HypothesisImportance
+from usa.rules_trie import RulesTrie, ClosureRulesTrie
 
 INF_VALUE = np.inf
 
@@ -103,3 +103,46 @@ class ClassifierBySequencePatterns:
             print("You need to fit model")
 
             return []
+
+
+class ClassifierByClosureSequencePatterns(ClassifierBySequencePatterns):
+    def fit(self, data, label):
+        # print(len(data))
+        # print(len(label))
+
+        rules_tree = ClosureRulesTrie(data, label)
+
+        imp_rules = []
+        for i in xrange(self.number_of_classes):
+            imp_rules.append(rules_tree.important_rules_selection(self.threshold_for_rules, label=i))
+
+        self.trie = rules_tree
+
+        inf = []
+        for i in xrange(self.number_of_classes):
+            inf.append(RulesImportance(imp_rules[i], rules_tree, self.threshold_for_growth_rate, label=i))
+
+        for i in inf:
+            self.rules_class.append(i)
+
+        self.model = True
+
+
+class ClassifierByHypothesisPatterns(ClassifierBySequencePatterns):
+    def fit(self, data, label):
+        rules_tree = ClosureRulesTrie(data, label)
+
+        imp_rules = []
+        for i in xrange(self.number_of_classes):
+            imp_rules.append(rules_tree.important_rules_selection(self.threshold_for_rules, label=i))
+
+        self.trie = rules_tree
+
+        inf = []
+        for i in xrange(self.number_of_classes):
+            inf.append(HypothesisImportance(imp_rules[i], rules_tree, label=i))
+
+        for i in inf:
+            self.rules_class.append(i)
+
+        self.model = True

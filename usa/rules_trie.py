@@ -354,9 +354,9 @@ class RulesImportance:
 
         contributions = self.dict_of_contributions_to_score_class.values()
         contributions = np.array(contributions)
-        median = np.median(contributions)
+        # median = np.median(contributions)
         # median = len(contributions)
-        print("Median = %f" % median)
+        # print("Median = %f" % median)
 
         # for key, value in self.dict_of_contributions_to_score_class.items():
         #     if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
@@ -374,7 +374,6 @@ class HypothesisImportance:
 
         :param rules: list of sequences(rules)
         :param trie: some RulesTrie based on some data set
-        :param threshold: threshold on growth rate to put rules in classifier
         :param label: class for what we want to make a set of important rules
         :return:
         """
@@ -404,9 +403,9 @@ class HypothesisImportance:
 
         contributions = self.dict_of_contributions_to_score_class.values()
         contributions = np.array(contributions)
-        median = np.median(contributions)
+        # median = np.median(contributions)
         # median = len(contributions)
-        print("Median = %f" % median)
+        # print("Median = %f" % median)
 
         # for key, value in self.dict_of_contributions_to_score_class.items():
         #     if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
