@@ -1,7 +1,7 @@
 import csv
 
 
-class SequencesFromFile(object):
+class ReadFromCSV(object):
     def __init__(self, file_name, coding_dict={}):
         self.file_name = file_name
         self.coding_dict = coding_dict
@@ -69,7 +69,7 @@ class SequencesFromFile(object):
     # def _create_two_different_files(self, ):
 
 if __name__ == '__main__':
-    data = SequencesFromFile('/Users/danil.gizdatullin/git_projects/'
+    data = ReadFromCSV('/Users/danil.gizdatullin/git_projects/'
                              'Trie_for_sequential_rules/data_experiment/full_data_shuffle.csv',
                              coding_dict={'work': 1,
                                           'separation': 2,

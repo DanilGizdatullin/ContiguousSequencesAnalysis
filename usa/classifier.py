@@ -1,12 +1,12 @@
 import numpy as np
 
-from usa.rules_trie.important_rules import RulesImportance
-from usa.rules_trie.trie import RulesTrie
+from usa.rules_trie import RulesImportance
+from usa.rules_trie import RulesTrie
 
 INF_VALUE = np.inf
 
 
-class Classifier:
+class ClassifierBySequencePatterns:
     def __init__(self, number_of_classes=2, threshold_for_rules=0.01, threshold_for_growth_rate=1.):
         self.model = False
         self.rules_class = []
