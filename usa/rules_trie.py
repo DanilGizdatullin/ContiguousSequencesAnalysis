@@ -180,20 +180,46 @@ class RulesTrie:
 
 
 class ClosureRulesTrie(RulesTrie):
-    def is_closure(self, rule, label=0):
+    # def is_closure(self, rule, label=0):
+    #     """
+    #     This boolean function return True if rule is closure and False otherwise
+    #
+    #     :param rule: list of some rule
+    #     :param label: int value for class
+    #     :return: bool
+    #     """
+    #     node_id = self.node_full_sequence_dict_reversed[str(rule)]
+    #     sup_node = self.node_visits_dict[node_id][label]
+    #
+    #     children_sup = []
+    #     for i in self.node_children_dict[node_id]:
+    #         children_sup.append(self.node_visits_dict[i][label])
+    #     try:
+    #         max_child_sup = max(children_sup)
+    #     except ValueError:
+    #         max_child_sup = sup_node - 1
+    #
+    #     if max_child_sup > sup_node:
+    #         print "What the fuck?"
+    #         return False
+    #     elif max_child_sup == sup_node:
+    #         return False
+    #     else:
+    #         return True
+
+    def is_closure(self, rule):
         """
         This boolean function return True if rule is closure and False otherwise
 
         :param rule: list of some rule
-        :param label: int value for class
         :return: bool
         """
         node_id = self.node_full_sequence_dict_reversed[str(rule)]
-        sup_node = self.node_visits_dict[node_id][label]
+        sup_node = sum(self.node_visits_dict[node_id])
 
         children_sup = []
         for i in self.node_children_dict[node_id]:
-            children_sup.append(self.node_visits_dict[i][label])
+            children_sup.append(sum(self.node_visits_dict[i]))
         try:
             max_child_sup = max(children_sup)
         except ValueError:
@@ -219,7 +245,7 @@ class ClosureRulesTrie(RulesTrie):
         for item in self.node_full_sequence_dict.items():
             rule = item[1]
             if rule:
-                if self.support_t(rule, label) > min_threshold and self.is_closure(rule, label):
+                if self.support_t(rule, label) > min_threshold and self.is_closure(rule):
                     ds_rules.append(rule)
 
         return ds_rules
@@ -343,7 +369,7 @@ class RulesImportance:
             gr_ra1 = _growth_rate_t(self.dict_of_rules[key], trie, label)
             if gr_ra1 == INF_VALUE or gr_ra1 > threshold:
                 if gr_ra1 == INF_VALUE:
-                    self.dict_of_contributions_to_score_class[key] = trie.support_t(self.dict_of_rules[key], label)
+                    # self.dict_of_contributions_to_score_class[key] = trie.support_t(self.dict_of_rules[key], label)
                     self.dict_of_contributions_to_score_class[key] = INF_VALUE
                 else:
                     # self.dict_of_contributions_to_score_class[key] = (gr_ra1 / (1 + gr_ra1)) * \
@@ -354,13 +380,17 @@ class RulesImportance:
 
         contributions = self.dict_of_contributions_to_score_class.values()
         contributions = np.array(contributions)
-        median = np.median(contributions)
-        # median = len(contributions)
+        contributions_without_inf = []
+        for i in contributions:
+            if i != INF_VALUE:
+                contributions_without_inf.append(i)
+        median = np.median(contributions_without_inf)
+        # median = len(contributions_without_inf)
         print("Median = %f" % median)
 
-        # for key, value in self.dict_of_contributions_to_score_class.items():
-        #     if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
-        #         self.dict_of_contributions_to_score_class[key] = value / float(median)
+        for key, value in self.dict_of_contributions_to_score_class.items():
+            if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
+                self.dict_of_contributions_to_score_class[key] = value / float(median)
 
         for key in rules_to_delete:
             del self.dict_of_rules[key]
@@ -374,7 +404,6 @@ class HypothesisImportance:
 
         :param rules: list of sequences(rules)
         :param trie: some RulesTrie based on some data set
-        :param threshold: threshold on growth rate to put rules in classifier
         :param label: class for what we want to make a set of important rules
         :return:
         """
@@ -393,20 +422,21 @@ class HypothesisImportance:
             gr_ra1 = _growth_rate_t(self.dict_of_rules[key], trie, label)
             if gr_ra1 == INF_VALUE or gr_ra1 > threshold:
                 if gr_ra1 == INF_VALUE:
-                    self.dict_of_contributions_to_score_class[key] = trie.support_t(self.dict_of_rules[key], label)
+                    # self.dict_of_contributions_to_score_class[key] = trie.support_t(self.dict_of_rules[key], label)
                     self.dict_of_contributions_to_score_class[key] = INF_VALUE
                 else:
+                    rules_to_delete.append(key)
                     # self.dict_of_contributions_to_score_class[key] = (gr_ra1 / (1 + gr_ra1)) * \
                     #                                                  (trie1.support_t(self.dict_of_rules[key]))
-                    self.dict_of_contributions_to_score_class[key] = gr_ra1
+                    # self.dict_of_contributions_to_score_class[key] = gr_ra1
             else:
                 rules_to_delete.append(key)
 
         contributions = self.dict_of_contributions_to_score_class.values()
         contributions = np.array(contributions)
-        median = np.median(contributions)
+        # median = np.median(contributions)
         # median = len(contributions)
-        print("Median = %f" % median)
+        # print("Median = %f" % median)
 
         # for key, value in self.dict_of_contributions_to_score_class.items():
         #     if self.dict_of_contributions_to_score_class[key] != INF_VALUE:

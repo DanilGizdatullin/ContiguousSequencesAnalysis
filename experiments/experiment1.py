@@ -3,8 +3,9 @@ import time
 from sklearn.metrics import accuracy_score
 
 from usa.reader import ReadFromCSV
-from usa.classifier import ClassifierBySequencePatterns as csp
-from usa.rules_trie import RulesTrie, ClosureRulesTrie, RulesImportance, HypothesisImportance
+from usa.classifier import ClassifierBySequencePatterns as csp, ClassifierByClosureSequencePatterns
+from usa.rules_trie import RulesTrie, ClosureRulesTrie, RulesImportance, HypothesisImportance, _growth_rate_t
+from usa.metrics import accuracy_score_with_unclassified_objects, tpr_fpr_nonclass, f1_score_nonclass
 
 
 file_name = '/Users/danil.gizdatullin/git_projects/HSE/UnbrokenSequenceAnalysis/examples/data/full_data_shuffle.csv'
@@ -59,6 +60,12 @@ closure_rules = closure_trie.important_rules_selection(0.001, 0)
 
 all_hypothesis = HypothesisImportance(hypo_candidates, trie, 0)
 
+# print(_growth_rate_t([['1', '8'], ['3'], ['4'], ['5'], ['2'], ['6'], ['7']], closure_trie, label=0))
+# print(closure_trie.support_t([['1', '8'], ['3'], ['4'], ['5'], ['2'], ['6'], ['7']], label=0))
+# print(closure_trie.support_t([['1', '8'], ['3'], ['4'], ['5'], ['2'], ['6'], ['7']], label=1))
+# print(closure_trie.support_t_except_class([['1', '8'], ['3'], ['4'], ['5'], ['2'], ['6'], ['7']], label=0))
+
+print("")
 # for i in rules:
 #     flag = False
 #     for j in closure_rules:
@@ -127,5 +134,38 @@ all_hypothesis = HypothesisImportance(hypo_candidates, trie, 0)
 # print(trie.support_t([['2'], ['1'], ['4'], ['5'], ['8'], ['7'], ['3'], ['6']], 1))
 # print(closure_trie.support_t([['2'], ['1'], ['4'], ['5'], ['8'], ['7'], ['3'], ['6']], 1))
 
-print all_hypothesis.dict_of_rules
-print all_hypothesis.dict_of_contributions_to_score_class
+# print all_hypothesis.dict_of_rules
+# print all_hypothesis.dict_of_contributions_to_score_class
+
+# classifier = csp(number_of_classes=2, threshold_for_rules=0.001, threshold_for_growth_rate=1.5)
+classifier = ClassifierByClosureSequencePatterns(number_of_classes=2,
+                                                 threshold_for_rules=0.001,
+                                                 threshold_for_growth_rate=4.)
+classifier.fit(data, label)
+
+y_pred = classifier.predict(data)
+
+ac = accuracy_score_with_unclassified_objects(label, y_pred)
+conf = tpr_fpr_nonclass(label, y_pred)
+f1 = f1_score_nonclass(label, y_pred)
+
+print ac
+print conf
+print f1
+# rule = []
+# cntr = 0
+# border = 7
+# for i in xrange(len(label)):
+#     if label[i] != y_pred and y_pred != -1:
+#         cntr += 1
+#         if cntr == border:
+#             print(data[i])
+#             rule = data[i]
+#             break
+
+# [['2'], ['1', '8'], ['4'], ['5']]
+# [['8'], ['1'], ['2'], ['3'], ['6']] complex
+
+# print classifier._classify_object_score(rule, silence=False)
+# print classifier.rules_class[0].dict_of_rules['122']
+# print classifier.rules_class[1].dict_of_rules['123']

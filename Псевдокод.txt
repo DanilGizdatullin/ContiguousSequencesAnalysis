@@ -1,0 +1,71 @@
+Псевдокод.
+
+Построение дерева.
+
+# At first tree has only some empty root node
+tree <- [root]
+
+current_node <- root
+
+for each sequence, label of data:
+	for each element of sequence:
+		child_with_element <- find(element, current_node.childs)
+
+		if child_with_element <> None
+		then	
+			child_with_element.counter[label] += 1
+			current_node <- child_with_element
+		else
+			current_node.childs.add(new_child)
+			new_child.element = element
+			new_child[label] = 0
+			current_node <- new_child
+
+Отбор паттернов.
+(замкнутых)
+input threshold
+
+
+Оценка сложности.
+n - кол-во объектов в training set
+m - кол-во различных элементов (то есть наш алфавит событий)
+если события не повторяются
+
+(По времени)
+n - for each sequence, label of data:
+*
+m - for each element of sequence:
+*
+m - find функция максимум проверит m различных детей
+
+O(n * m^2)
+в нашем случае m - малое число, которое можно принять за констант
+O(n)
+
+(По памяти)
+Худший случай, когда для всех последовательностей на каждом шаге все различаются
+    _______0________
+  _a_______b_______c_
+_b___c___a___c___a___b_
+
+m - на первом уровне
+m*(m-1) - на втором уровне
+m*(m-1)*(m-2) - на третьем уровне
+и т.д.
+найти их сумму
+
+Алгоритм отбора паттернов.
+Задана какая-то граница по support и по growth_rate
+
+
+Задача классификации по паттернам.
+сложность по времени такая же как и сложности по памяти для построения
+
+Максимальная возможная длина паттерна m.
+k- кол-во всех паттернов для всех классов.
+
+Наш объект мы должны сравнить со всеми возможными паттернами.
+O(k*m) - сложность классификации одного объекта
+
+
+
