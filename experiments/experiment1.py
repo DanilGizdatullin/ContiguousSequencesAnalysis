@@ -3,7 +3,7 @@ import time
 from sklearn.metrics import accuracy_score
 
 from usa.reader import ReadFromCSV
-from usa.classifier import ClassifierBySequencePatterns as csp, ClassifierByClosureSequencePatterns
+from usa.classifier import SimpleClassifier as csp, ClosureClassifier
 from usa.rules_trie import RulesTrie, ClosureRulesTrie, RulesImportance, HypothesisImportance, _growth_rate_t
 from usa.metrics import accuracy_score_with_unclassified_objects, tpr_fpr_nonclass, f1_score_nonclass
 
@@ -138,9 +138,9 @@ print("")
 # print all_hypothesis.dict_of_contributions_to_score_class
 
 # classifier = csp(number_of_classes=2, threshold_for_rules=0.001, threshold_for_growth_rate=1.5)
-classifier = ClassifierByClosureSequencePatterns(number_of_classes=2,
-                                                 threshold_for_rules=0.001,
-                                                 threshold_for_growth_rate=4.)
+classifier = ClosureClassifier(number_of_classes=2,
+                               threshold_for_rules=0.001,
+                               threshold_for_growth_rate=4.)
 classifier.fit(data, label)
 
 y_pred = classifier.predict(data)

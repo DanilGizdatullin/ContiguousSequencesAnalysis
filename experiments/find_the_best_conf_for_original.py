@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from usa.reader import ReadFromCSV
-from usa.classifier import ClassifierBySequencePatterns,\
-    ClassifierByClosureSequencePatterns,\
-    ClassifierByHypothesisPatterns
+from usa.classifier import SimpleClassifier,\
+    ClosureClassifier,\
+    HypothesisClassifier
 from usa.metrics import accuracy_score_with_unclassified_objects, tpr_fpr_nonclass
 
 file_name = '/Users/danil.gizdatullin/git_projects/HSE/UnbrokenSequenceAnalysis/examples/data/full_data_shuffle.csv'
@@ -31,9 +31,9 @@ y_test = label[size_of_train:]
 #                                                  threshold_for_growth_rate=0.3)
 f_ones = []
 for i in (1.00001, 2, 5, 10, 20):
-    origin_classifier = ClassifierBySequencePatterns(number_of_classes=2,
-                                                     threshold_for_rules=0.0004,
-                                                     threshold_for_growth_rate=i)
+    origin_classifier = SimpleClassifier(number_of_classes=2,
+                                         threshold_for_rules=0.0004,
+                                         threshold_for_growth_rate=i)
     origin_classifier.fit(X_train, y_train)
     y_pred = origin_classifier.predict(X_test, y_test)
 

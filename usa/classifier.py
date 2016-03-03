@@ -6,7 +6,7 @@ from usa.rules_trie import RulesTrie, ClosureRulesTrie
 INF_VALUE = np.inf
 
 
-class ClassifierBySequencePatterns:
+class SimpleClassifier:
     def __init__(self, number_of_classes=2, threshold_for_rules=0.01, threshold_for_growth_rate=1.):
         self.model = False
         self.rules_class = []
@@ -165,27 +165,8 @@ class ClassifierBySequencePatterns:
 
         return score_for_class
 
-    # def important_rules(self, class_name=0):
-    #     if self.model:
-    #         rules = []
-    #
-    #         try:
-    #             for rule_id in self.rules_class[class_name].dict_of_contributions_to_score_class.iterkeys():
-    #                 rules.append((self.rules_class[class_name].dict_of_rules[rule_id],
-    #                               self.rules_class[class_name].dict_of_contributions_to_score_class[rule_id]))
-    #
-    #             return rules
-    #         except IndexError:
-    #             print("Choose the right class name")
-    #
-    #             return []
-    #     else:
-    #         print("You need to fit model")
-    #
-    #         return []
 
-
-class ClassifierByClosureSequencePatterns(ClassifierBySequencePatterns):
+class ClosureClassifier(SimpleClassifier):
     def fit(self, data, label):
         # print(len(data))
         # print(len(label))
@@ -208,7 +189,7 @@ class ClassifierByClosureSequencePatterns(ClassifierBySequencePatterns):
         self.model = True
 
 
-class ClassifierByHypothesisPatterns(ClassifierBySequencePatterns):
+class HypothesisClassifier(SimpleClassifier):
     def fit(self, data, label):
         rules_tree = ClosureRulesTrie(data, label)
 

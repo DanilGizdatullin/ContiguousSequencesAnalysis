@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from usa.reader import ReadFromCSV
-from usa.classifier import ClassifierBySequencePatterns,\
-    ClassifierByClosureSequencePatterns,\
-    ClassifierByHypothesisPatterns
+from usa.classifier import SimpleClassifier,\
+    ClosureClassifier,\
+    HypothesisClassifier
 from usa.metrics import accuracy_score_with_unclassified_objects, tpr_fpr_nonclass
 
 # model.fit(women_train_data,
@@ -28,16 +28,16 @@ X_test = data[size_of_train:]
 y_train = label[:size_of_train]
 y_test = label[size_of_train:]
 
-origin_classifier = ClassifierBySequencePatterns(number_of_classes=2,
-                                                 threshold_for_rules=0.003,
-                                                 threshold_for_growth_rate=0.3)
+origin_classifier = SimpleClassifier(number_of_classes=2,
+                                     threshold_for_rules=0.003,
+                                     threshold_for_growth_rate=0.3)
 
-closure_classifier = ClassifierByClosureSequencePatterns(number_of_classes=2,
-                                                         threshold_for_rules=0.003,
-                                                         threshold_for_growth_rate=0.3)
+closure_classifier = ClosureClassifier(number_of_classes=2,
+                                       threshold_for_rules=0.003,
+                                       threshold_for_growth_rate=0.3)
 
-hypothesis_classifier = ClassifierByHypothesisPatterns(number_of_classes=2,
-                                                       threshold_for_rules=0.0)
+hypothesis_classifier = HypothesisClassifier(number_of_classes=2,
+                                             threshold_for_rules=0.0)
 
 origin_classifier.fit(X_train, y_train)
 closure_classifier.fit(X_train, y_train)
