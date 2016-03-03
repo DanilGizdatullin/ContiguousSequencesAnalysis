@@ -1,4 +1,5 @@
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
+import numpy as np
 
 
 def accuracy_score_with_unclassified_objects(y, y_predict):
@@ -66,3 +67,53 @@ def f1_score_nonclass(y, y_predict):
     f1 = f1_score(y_new, y_predict_new)
 
     return f1, number_of_unclassified
+
+
+class CostValueAbstainingClassifiers(object):
+    def __init__(self, cost_matrix=(1, 1/2.0)):
+        self.mu = cost_matrix[0]
+        self.nu = cost_matrix[1]
+
+    def expected_cost(self, y_valid, y_predict):
+        """
+        C = ([C(P,p), C(P,n), C(P,a)]; [C(N,p), C(N, n), C(N,a)])
+        In our case
+        C =([0, 1, C'(P,a)]; [C'(N,p), 0, C'(P,a)])
+
+        mu is a C'(N,p) - cost of fasle-positive
+        nu is a C'(P,a) - cost of abstaining classified object
+        :param y_valid: list of real labels
+        :param y_predict: list of predicted labels
+        :return: float cost value
+        """
+        P_n_P = 0
+        P_p_N = 0
+        P_a = 0
+        P_P = sum(y_valid)
+        P_N = len(y_valid) - sum(y_valid)
+        n = float(len(y_valid))
+
+        for i in xrange(len(y_valid)):
+            if y_valid[i] == 1 and y_predict[i] == 0:
+                P_n_P += 1
+            elif y_valid[i] == 0 and y_predict[i] == 1:
+                P_p_N += 1
+            elif y_predict[i] == -1:
+                P_a += 1
+        P_n_P /= n
+        P_p_N /= n
+        P_a /= n
+        P_P /= n
+        P_N /= n
+        cost = P_n_P + self.mu * P_p_N + self.nu * P_a
+
+        return cost
+
+if __name__ == '__main__':
+    cost_counter = CostValueAbstainingClassifiers([1, 1/10.0])
+    ans = [1, 1, 1, 0, 0, 0]
+    pred = [-1, -1, -1, -1, -1, -1]
+    pred1 = [-1, -1, 1, -1, -1, 1]
+
+    print cost_counter.expected_cost(ans, pred)
+    print cost_counter.expected_cost(ans, pred1)

@@ -19,6 +19,7 @@ You can find some examples of using in *./examples/export_data_from_csv.py*
   
 ## Building Rules Trie.  
 You can build a simple Rules Trie and Closured Rules Trie, which has only closured patterns.  
+Also you can find important rules or hypothesis by minimum growth rate.  
 You can find some examples in *./examples/build_rules_trie_on_some_data.py*  
   
 ## Classifier.  
