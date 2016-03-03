@@ -55,7 +55,7 @@ classifier = ClassifierByHypothesisPatterns(number_of_classes=2,
                                             threshold_for_rules=0.001,)
 classifier.fit(X_train, y_train)
 test_pred = classifier.predict(X_test)
-print("Classification by hypothesis acciracy")
+print("Classification by hypothesis accuracy")
 print accuracy_score_with_unclassified_objects(y_test, test_pred)
 print("Cost function")
 print costf.expected_cost(y_test, test_pred)

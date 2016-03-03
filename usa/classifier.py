@@ -17,8 +17,8 @@ class ClassifierBySequencePatterns:
 
     def fit(self, data, label):
 
-        print(len(data))
-        print(len(label))
+        # print(len(data))
+        # print(len(label))
 
         rules_tree = RulesTrie(data, label)
 

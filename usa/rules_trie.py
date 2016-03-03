@@ -386,7 +386,7 @@ class RulesImportance:
                 contributions_without_inf.append(i)
         median = np.median(contributions_without_inf)
         # median = len(contributions_without_inf)
-        print("Median = %f" % median)
+        # print("Median = %f" % median)
 
         for key, value in self.dict_of_contributions_to_score_class.items():
             if self.dict_of_contributions_to_score_class[key] != INF_VALUE:

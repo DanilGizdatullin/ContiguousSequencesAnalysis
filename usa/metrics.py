@@ -32,7 +32,7 @@ def tpr_fpr_nonclass(y, y_predict):
             number_of_unclassified += 1
 
     confusion_m = confusion_matrix(y_new, y_predict_new)
-    print(confusion_m)
+    # print(confusion_m)
     if confusion_m != []:
         tp = confusion_m[1, 1]
         fp = confusion_m[0, 1]
