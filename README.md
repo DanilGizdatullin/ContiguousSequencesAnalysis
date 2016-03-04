@@ -1,4 +1,4 @@
-# UnbrokenSequenceAnalysis
+# Sequence Analysis with Unbroken Patterns
 Some algorithms to work with unbroken sequences  
   
 ## Format of Sequence Data.
