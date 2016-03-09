@@ -187,9 +187,6 @@ class ClassifierBySequencePatterns:
 
 class ClassifierByClosureSequencePatterns(ClassifierBySequencePatterns):
     def fit(self, data, label):
-        # print(len(data))
-        # print(len(label))
-
         rules_tree = ClosureRulesTrie(data, label)
 
         imp_rules = []
@@ -226,6 +223,73 @@ class ClassifierByHypothesisPatterns(ClassifierBySequencePatterns):
             self.rules_class.append(i)
 
         self.model = True
+
+
+class ClassifierByClosureSequencePatternsWithWeighs(ClassifierByClosureSequencePatterns):
+    def __init__(self, number_of_classes=2, threshold_for_rules=0.01, threshold_for_growth_rate=1., weights=(1., 1.)):
+        self.model = False
+        self.rules_class = []
+        self.trie = False
+        self.threshold_for_rules = threshold_for_rules
+        self.threshold_for_growth_rate = threshold_for_growth_rate
+        self.number_of_classes = number_of_classes
+        self.weights = weights
+
+    def _classify_object(self, object_to_classification, silence=True):
+        score_for_class = [0 for _ in xrange(self.number_of_classes)]
+
+        rules_from_class = [[] for _ in xrange(self.number_of_classes)]
+
+        for i in xrange(self.number_of_classes):
+            for rule_id, rule in self.rules_class[i].dict_of_rules.items():
+                rule_len = len(rule)
+                if rule == object_to_classification[0: rule_len]:
+                    rules_from_class[i].append(rule_id)
+
+            id_to_remove_from_class = [[] for i in xrange(self.number_of_classes)]
+            for rule_id1 in rules_from_class[i]:
+                for rule_id2 in rules_from_class[i]:
+                    if rule_id1 != rule_id2 and\
+                            (rule_id1 not in id_to_remove_from_class[i]) and\
+                            (rule_id2 not in id_to_remove_from_class[i]):
+                        rule1 = self.rules_class[i].dict_of_rules[rule_id1]
+                        rule2 = self.rules_class[i].dict_of_rules[rule_id2]
+                        if rule1[0: len(rule2)] == rule2:
+                            id_to_remove_from_class[i].append(rule_id2)
+                        elif rule2[0: len(rule1)] == rule1:
+                            id_to_remove_from_class[i].append(rule_id1)
+        for i in xrange(self.number_of_classes):
+            for j in xrange(self.number_of_classes):
+                for rule_id1 in rules_from_class[i]:
+                    for rule_id2 in rules_from_class[j]:
+                        if rule_id1 != rule_id2 and\
+                                (rule_id1 not in id_to_remove_from_class[i]) and\
+                                (rule_id2 not in id_to_remove_from_class[j]):
+                            rule1 = self.rules_class[i].dict_of_rules[rule_id1]
+                            rule2 = self.rules_class[j].dict_of_rules[rule_id2]
+                            if rule1[0: len(rule2)] == rule2:
+                                id_to_remove_from_class[j].append(rule_id2)
+                            elif rule2[0: len(rule1)] == rule1:
+                                id_to_remove_from_class[i].append(rule_id1)
+
+        for i in xrange(self.number_of_classes):
+            # print(id_to_remove_from_class[i])
+            for id_to_del in id_to_remove_from_class[i]:
+                # print(rules_from_class[i], id_to_del)
+                rules_from_class[i].remove(id_to_del)
+
+        for i in xrange(self.number_of_classes):
+            for rule in rules_from_class[i]:
+                if rule in self.rules_class[i].dict_of_contributions_to_score_class:
+                    score_for_class[i] += self.rules_class[i].dict_of_contributions_to_score_class[rule]
+        if not silence:
+            print(rules_from_class)
+        if max(score_for_class) != 0:
+            ans_class = np.argmax(score_for_class)
+
+            return ans_class
+        else:
+            return -1
 
 
 # class ClassifierWithDifferentThresholds(ClassifierBySequencePatterns):
