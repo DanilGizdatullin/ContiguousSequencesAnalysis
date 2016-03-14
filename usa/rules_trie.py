@@ -378,19 +378,19 @@ class RulesImportance:
             else:
                 rules_to_delete.append(key)
 
-        contributions = self.dict_of_contributions_to_score_class.values()
-        contributions = np.array(contributions)
-        contributions_without_inf = []
-        for i in contributions:
-            if i != INF_VALUE:
-                contributions_without_inf.append(i)
-        median = np.median(contributions_without_inf)
-        # median = len(contributions_without_inf)
-        # print("Median = %f" % median)
-
-        for key, value in self.dict_of_contributions_to_score_class.items():
-            if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
-                self.dict_of_contributions_to_score_class[key] = value / float(median)
+        # contributions = self.dict_of_contributions_to_score_class.values()
+        # contributions = np.array(contributions)
+        # contributions_without_inf = []
+        # for i in contributions:
+        #     if i != INF_VALUE:
+        #         contributions_without_inf.append(i)
+        # median = np.median(contributions_without_inf)
+        # # median = len(contributions_without_inf)
+        # # print("Median = %f" % median)
+        #
+        # for key, value in self.dict_of_contributions_to_score_class.items():
+        #     if self.dict_of_contributions_to_score_class[key] != INF_VALUE:
+        #         self.dict_of_contributions_to_score_class[key] = value / float(median)
 
         for key in rules_to_delete:
             del self.dict_of_rules[key]
@@ -450,7 +450,7 @@ if __name__ == '__main__':
                      label=[1, 1, 0, 1])
     # tree.trie_for_rules()
     print tree.nodes
-    print tree.node_childes_dict
+    print tree.node_children_dict
     print tree.node_parent_dict
     print tree.node_sequence_dict
     print tree.node_visits_dict
