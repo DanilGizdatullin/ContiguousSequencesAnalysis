@@ -11,7 +11,7 @@ current user. The format of timestamp is doesn't matter. If event didn't happen 
 *1;;215;305*  
   
 ## Create a Special Data Format From CSV  
-To build Rules Tree and using Classifier you need to convert your data in special format.  
+To build Sequences Tree and using Classifier you need to convert your data in special format.  
 **Example**  
 *data = [[['1'], ['2'], ['3']], ..., [['1', '2'], ['3'], ['4']]]*  
 *labels = [1, ..., 0]*  
