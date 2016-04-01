@@ -1,4 +1,4 @@
-# Gapless Sequence Analysis
+# Gapless Sequences Analysis
 Some algorithms to work with gapless sequences  
   
 ## Format of Sequence Data.
