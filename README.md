@@ -1,5 +1,5 @@
-# Sequence Analysis with Unbroken Patterns
-Some algorithms to work with unbroken sequences  
+# Gapless Sequence Analysis
+Some algorithms to work with gapless sequences  
   
 ## Format of Sequence Data.
 To use this library, you need to have data is special format.  
