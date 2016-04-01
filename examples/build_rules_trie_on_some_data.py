@@ -1,6 +1,6 @@
-from usa.reader import ReadFromCSV
-from usa.rules_trie import RulesTrie, ClosureRulesTrie
-from usa.rules_trie import RulesImportance, HypothesisImportance
+from gsa.reader import ReadFromCSV
+from gsa.rules_trie import RulesTrie, ClosureRulesTrie
+from gsa.rules_trie import RulesImportance, HypothesisImportance
 
 sequence_reader = ReadFromCSV(file_name='./data/full_data_shuffle.csv',
                               coding_dict={'work': 1,

@@ -1,4 +1,4 @@
-from usa.reader import ReadFromCSV
+from gsa.reader import ReadFromCSV
 
 # create a object of class ReadFromCSV
 # file_name is a path to file with data

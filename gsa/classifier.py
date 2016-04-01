@@ -1,7 +1,7 @@
 import numpy as np
 
-from usa.rules_trie import RulesImportance, HypothesisImportance
-from usa.rules_trie import RulesTrie, ClosureRulesTrie
+from gsa.rules_trie import RulesImportance, HypothesisImportance
+from gsa.rules_trie import RulesTrie, ClosureRulesTrie
 
 INF_VALUE = np.inf
 

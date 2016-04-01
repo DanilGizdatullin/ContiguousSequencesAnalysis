@@ -1,6 +1,6 @@
-from usa.reader import ReadFromCSV
-from usa.metrics import accuracy_score_with_unclassified_objects, CostValueAbstainingClassifiers
-from usa.classifier import ClassifierBySequencePatterns, ClassifierByClosureSequencePatterns,\
+from gsa.reader import ReadFromCSV
+from gsa.metrics import accuracy_score_with_unclassified_objects, CostValueAbstainingClassifiers
+from gsa.classifier import ClassifierBySequencePatterns, ClassifierByClosureSequencePatterns,\
     ClassifierByHypothesisPatterns
 
 sequence_reader = ReadFromCSV(file_name='./data/full_data_shuffle.csv',
