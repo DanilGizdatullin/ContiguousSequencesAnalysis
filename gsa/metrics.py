@@ -69,6 +69,48 @@ def tpr_fpr_nonclass(y, y_predict):
     return tpr, fpr, number_of_unclassified
 
 
+def tp_tn_fp_fn_ncp_ncn(y, y_predict):
+    y_new = []
+    y_predict_new = []
+    number_of_p_unclassified = 0
+    number_of_n_unclassified = 0
+
+    for i in xrange(len(y)):
+        if y_predict[i] != -1:
+            y_new.append(y[i])
+            y_predict_new.append(y_predict[i])
+        else:
+            if y[i] == 0:
+                number_of_n_unclassified += 1
+            elif y[i] == 1:
+                number_of_p_unclassified += 1
+
+    confusion_m = confusion_matrix(y_new, y_predict_new)
+    # print(confusion_m)
+    if confusion_m != []:
+        tp = confusion_m[1, 1]
+        fp = confusion_m[0, 1]
+
+        tn = confusion_m[0, 0]
+        fn = confusion_m[1, 0]
+
+        pos = tp + fn
+        neg = tn + fp
+
+        tpr = tp/float(pos)
+        fpr = fp/float(neg)
+    else:
+        tpr = 0
+        fpr = 0
+
+    # number_of_pos = float(sum(y))
+    # number_of_neg = float(len(y) - sum(y))
+    # ncpr = number_of_p_unclassified / number_of_pos
+    # ncnr = number_of_n_unclassified / number_of_neg
+
+    return tp, tn, fp, fn, number_of_p_unclassified, number_of_n_unclassified
+
+
 def tpr_fpr_ncpr_ncnr(y, y_predict):
     y_new = []
     y_predict_new = []
