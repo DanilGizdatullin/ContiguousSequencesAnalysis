@@ -1,4 +1,4 @@
-# Gapless Sequences Analysis
+# Contiguous Sequences Analysis
 Some algorithms to work with gapless sequences  
   
 ## Format of Sequence Data.
