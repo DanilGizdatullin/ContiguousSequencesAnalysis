@@ -18,11 +18,11 @@ To build Sequence Tree and use our Classifier you need to convert your data in a
 You can find some usage examples in *./examples/export_data_from_csv.py*    
   
 ## Building Rules Trie.  
-One can build a simple Rules Trie and Closed Rules Trie, which contaons only closed patterns.  
+One can build a simple Rules Trie and Closed Rules Trie, which contains only closed patterns.  
 Also you can find important rules or hypothesis by setting the value of minimum growth rate.  
 You can find some examples in *./examples/build_rules_trie_on_some_data.py*  
   
 ## Classifier.  
-You can use Simple Classifier, Closure Classifier or Hypothesis Classifier. With this tool you can solve binary and  
+One can use Simple Classifier, Closure Classifier or Hypothesis Classifier. With this tool you can solve binary and  
 multi-classification tasks.  
 You can find some examples in *./examples/using_classification.py*  
