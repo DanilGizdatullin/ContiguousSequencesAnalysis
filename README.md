@@ -23,6 +23,6 @@ Also you can find important rules or hypothesis by setting the value of minimum 
 You can find some examples in *./examples/build_rules_trie_on_some_data.py*  
   
 ## Classifier 
-One can use Simple Classifier, Closure Classifier or Hypothesis Classifier. With this tool you can solve binary and  
+One can use Simple Classifier (both closed and non-closed patterns apply), Closure-based Classifier or Hypothesis-based Classifier (closed non-falsified patterns). With this tool you can solve binary and  
 multi-classification tasks.  
 You can find some examples in *./examples/using_classification.py*  
