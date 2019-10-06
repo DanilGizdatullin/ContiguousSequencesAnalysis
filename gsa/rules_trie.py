@@ -61,7 +61,7 @@ class RulesTrie:
             else:
                 dict_seq[free_node] = [str_seq]
             # dict_num[free_node] = 1
-            dict_num[free_node] = [0 for i in xrange(self.number_of_classes)]
+            dict_num[free_node] = [0 for i in range(self.number_of_classes)]
             dict_num[free_node][self.label[num_of_sequence]] = 1
             current_node = free_node
             free_node += 1
@@ -89,7 +89,7 @@ class RulesTrie:
                         current_node = free_node
                         structure[current_node] = []
                         # dict_num[current_node] = 1
-                        dict_num[current_node] = [0 for i in xrange(self.number_of_classes)]
+                        dict_num[current_node] = [0 for i in range(self.number_of_classes)]
                         dict_num[current_node][self.label[num_of_sequence]] = 1
                         dict_seq[current_node] = str_seq
                         free_node += 1
@@ -101,7 +101,7 @@ class RulesTrie:
                     current_node = free_node
                     structure[current_node] = []
                     # dict_num[current_node] = 1
-                    dict_num[current_node] = [0 for i in xrange(self.number_of_classes)]
+                    dict_num[current_node] = [0 for i in range(self.number_of_classes)]
                     dict_num[current_node][self.label[num_of_sequence]] = 1
                     dict_seq[current_node] = str_seq
                     free_node += 1
@@ -113,7 +113,7 @@ class RulesTrie:
         self.node_parent_dict = dict_prev
         self.node_full_sequence_dict = dict_all_seq
 
-        dic_all_seq_rev = {str(v): k for k, v in self.node_full_sequence_dict.iteritems()}
+        dic_all_seq_rev = {str(v): k for k, v in self.node_full_sequence_dict.items()}
         self.node_full_sequence_dict_reversed = dic_all_seq_rev
 
     def support_t(self, rule, label=0):
@@ -150,11 +150,11 @@ class RulesTrie:
         :param label: int, it's a class
         :return: float value from 0 to 1
         """
-        all_classes = [i for i in xrange(self.number_of_classes)]
+        all_classes = [i for i in range(self.number_of_classes)]
         all_classes.remove(label)
         max_sup = self.support_t(rule, label=all_classes[0])
 
-        for i in xrange(1, len(all_classes)):
+        for i in range(1, len(all_classes)):
             sup = self.support_t(rule, label=all_classes[i])
             if sup > max_sup:
                 max_sup = sup
@@ -226,7 +226,7 @@ class ClosureRulesTrie(RulesTrie):
             max_child_sup = sup_node - 1
 
         if max_child_sup > sup_node:
-            print "What the fuck?"
+            print("What the fuck?")
             return False
         elif max_child_sup == sup_node:
             return False
@@ -286,7 +286,7 @@ class ClosureRulesTrie(RulesTrie):
     #     else:
     #         new_node = start_node
     #         current_node = start_node
-    #         for i in xrange(1, len(rule)):
+    #         for i in range(1, len(rule)):
     #             new_node = self.find_second_node(rule[i], current_node)
     #             if new_node == 0:
     #                 break
@@ -360,12 +360,12 @@ class RulesImportance:
         self.dict_of_contributions_to_score_class = {}
         self.dict_of_rules = {}
 
-        for i in xrange(len(rules)):
+        for i in range(len(rules)):
             self.dict_of_rules[str(97 + i)] = rules[i]
 
         rules_to_delete = []
 
-        for key in self.dict_of_rules.iterkeys():
+        for key in self.dict_of_rules:
             gr_ra1 = _growth_rate_t(self.dict_of_rules[key], trie, label)
             if gr_ra1 == INF_VALUE or gr_ra1 > threshold:
                 if gr_ra1 == INF_VALUE:
@@ -413,12 +413,12 @@ class HypothesisImportance:
         self.dict_of_contributions_to_score_class = {}
         self.dict_of_rules = {}
 
-        for i in xrange(len(rules)):
+        for i in range(len(rules)):
             self.dict_of_rules[str(97 + i)] = rules[i]
 
         rules_to_delete = []
 
-        for key in self.dict_of_rules.iterkeys():
+        for key in self.dict_of_rules:
             gr_ra1 = _growth_rate_t(self.dict_of_rules[key], trie, label)
             if gr_ra1 == INF_VALUE or gr_ra1 > threshold:
                 if gr_ra1 == INF_VALUE:
@@ -445,18 +445,19 @@ class HypothesisImportance:
         for key in rules_to_delete:
             del self.dict_of_rules[key]
 
+
 if __name__ == '__main__':
     tree = RulesTrie(list_of_sequences=[[[1], [2], [3]], [[1], [2], [4]], [[1, 2], [3, 4], [5]], [[1], [3], [2]]],
                      label=[1, 1, 0, 1])
     # tree.trie_for_rules()
-    print tree.nodes
-    print tree.node_children_dict
-    print tree.node_parent_dict
-    print tree.node_sequence_dict
-    print tree.node_visits_dict
-    print tree.node_full_sequence_dict
-    print tree.list_of_sequences
-    print tree.number_of_objects
+    print(tree.nodes)
+    print(tree.node_children_dict)
+    print(tree.node_parent_dict)
+    print(tree.node_sequence_dict)
+    print(tree.node_visits_dict)
+    print(tree.node_full_sequence_dict)
+    print(tree.list_of_sequences)
+    print(tree.number_of_objects)
     print(' ')
     print(tree.important_rules_selection(0.5, 1))
     print(tree.important_rules_selection(0.5, 0))

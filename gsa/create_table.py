@@ -14,19 +14,19 @@ class Table(object):
 
         full_stack_of_rules = []
 
-        for i in xrange(2):
+        for i in range(2):
             dict_of_rules = self.rules_class[i].dict_of_rules
             rules = dict_of_rules.values()
             full_stack_of_rules += rules
 
-        print len(full_stack_of_rules)
+        print(len(full_stack_of_rules))
         features = []
-        for i in xrange(len(full_stack_of_rules)):
+        for i in range(len(full_stack_of_rules)):
             features.append("f"+str(i))
 
-        for rule_id in xrange(len(full_stack_of_rules)):
+        for rule_id in range(len(full_stack_of_rules)):
             feature_column = []
-            for i in xrange(len(data)):
+            for i in range(len(data)):
                 if data[i][0: len(full_stack_of_rules[rule_id])] == full_stack_of_rules[rule_id]:
                     feature_column.append(1)
                 else:
@@ -73,4 +73,4 @@ if __name__ == "__main__":
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
-    print metrics.confusion_matrix(y_pred, y_test)
+    print(metrics.confusion_matrix(y_pred, y_test))

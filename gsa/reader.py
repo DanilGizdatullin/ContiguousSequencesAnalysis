@@ -83,5 +83,5 @@ if __name__ == '__main__':
     print(data)
     print(label)
 
-    print len(data)
-    print len(label)
+    print(len(data))
+    print(len(label))

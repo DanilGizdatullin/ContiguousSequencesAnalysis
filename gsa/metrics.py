@@ -7,7 +7,7 @@ def accuracy_score_with_unclassified_objects(y, y_predict):
     y_predict_new = []
     number_of_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -24,7 +24,7 @@ def confusion_matrix_with_unclassified(y, y_predict):
     y_predict_new = []
     number_of_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -41,7 +41,7 @@ def tpr_fpr_nonclass(y, y_predict):
     y_predict_new = []
     number_of_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -75,7 +75,7 @@ def tp_tn_fp_fn_ncp_ncn(y, y_predict):
     number_of_p_unclassified = 0
     number_of_n_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -117,7 +117,7 @@ def tpr_fpr_ncpr_ncnr(y, y_predict):
     number_of_p_unclassified = 0
     number_of_n_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -158,7 +158,7 @@ def f1_score_nonclass(y, y_predict):
     y_predict_new = []
     number_of_unclassified = 0
 
-    for i in xrange(len(y)):
+    for i in range(len(y)):
         if y_predict[i] != -1:
             y_new.append(y[i])
             y_predict_new.append(y_predict[i])
@@ -194,7 +194,7 @@ class CostValueAbstainingClassifiers(object):
         P_N = len(y_valid) - sum(y_valid)
         n = float(len(y_valid))
 
-        for i in xrange(len(y_valid)):
+        for i in range(len(y_valid)):
             if y_valid[i] == 1 and y_predict[i] == 0:
                 P_n_P += 1
             elif y_valid[i] == 0 and y_predict[i] == 1:
@@ -216,5 +216,5 @@ if __name__ == '__main__':
     pred = [-1, -1, -1, -1, -1, -1]
     pred1 = [-1, -1, 1, -1, -1, 1]
 
-    print cost_counter.expected_cost(ans, pred)
-    print cost_counter.expected_cost(ans, pred1)
+    print(cost_counter.expected_cost(ans, pred))
+    print(cost_counter.expected_cost(ans, pred1))
